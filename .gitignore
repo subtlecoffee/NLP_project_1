@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+
+part1/project_results/
+part1/results/
+
+part1/digital-text-example.ascii
+part1/digital-text-example.iso-8859-1
+part1/digital-text-example.utf-8
+part1/tutorial.ipynb
+
+LICENSE
+README.md
