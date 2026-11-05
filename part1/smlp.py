@@ -58,6 +58,43 @@ class SparseMLP(nn.Module):
         # logprobs
         return self.output(x)
 
+
+class MLP(nn.Module):
+    def __init__(self, input_dim, hidden_dim, num_classes, dropout=0.2):
+        super().__init__()
+
+        self.activation = nn.ReLU()
+        self.dropout = nn.Dropout(dropout)
+
+        self.output = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            self.activation,
+            self.dropout,
+            nn.Linear(hidden_dim, num_classes),
+            nn.LogSoftmax(dim=-1)  # for numerical stability, it is common to use log softmax, rather than softmax
+        )
+        # self.output = nn.Sequential(
+        #     nn.Linear(input_dim, num_classes),
+        #     nn.LogSoftmax(dim=-1)  # for numerical stability, it is common to use log softmax, rather than softmax
+        # )
+
+    def forward(self, x):
+        return self.output(x)
+
+
+class LogisticRegression(nn.Module):
+    def __init__(self, input_dim, num_classes):
+        super().__init__()
+
+        self.output = nn.Sequential(
+            nn.Linear(input_dim, num_classes),
+            nn.LogSoftmax(dim=-1)  # for numerical stability, it is common to use log softmax, rather than softmax
+        )
+
+    def forward(self, x):
+        return self.output(x)
+
+
 def scipy_to_torch_sparse(x):
     """Convert a SciPy sparse matrix to a coalesced PyTorch sparse COO tensor.
 
